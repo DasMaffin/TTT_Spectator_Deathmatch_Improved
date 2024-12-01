@@ -7,6 +7,23 @@ if SpecDM.AutoIncludeWeapons then
 	SpecDM.Loadout_Icons = {}
 
 	hook.Add("Initialize", "SharedInitialize_Ghost", function()
+
+
+
+		-- CreateGhost variants of every primary/secondary non T/D weapon 
+		for _, weapon in ipairs(weapons.GetList()) do
+			if weapon.Kind and weapon.Base == "weapon_tttbase" and weapon.CanBuy == nil and (weapon.Kind == WEAPON_HEAVY or weapon.Kind == WEAPON_PISTOL) then
+
+				-- Create a copy of the weapon
+				local ghostWeapon = table.Copy(weapon)
+				ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
+				ghostWeapon.ClassName = weapon.ClassName .. "_ghost" -- Ensure a unique class name
+		
+				-- Register the new weapon
+				weapons.Register(ghostWeapon, ghostWeapon.ClassName)
+			end
+		end
+
 		for _, w in ipairs(weapons.GetList()) do
 			if w.Kind and w.Base == "weapon_ghost_base" and (w.Kind == WEAPON_HEAVY or w.Kind == WEAPON_PISTOL) then
 				if w.Kind == WEAPON_HEAVY then
@@ -20,6 +37,8 @@ if SpecDM.AutoIncludeWeapons then
 				end
 			end
 		end
+
+
 	end)
 end
 
