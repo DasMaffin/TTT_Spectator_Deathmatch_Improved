@@ -1,3 +1,9 @@
+This forks changes
+========================
+
+The addon automatically loads any 3rd party modded weapons and creates a ghost variant, making it selectable as a SpecDM weapon.
+
+
 TTT Spectator Deathmatch
 ========================
 
