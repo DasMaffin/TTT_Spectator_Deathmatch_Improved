@@ -150,7 +150,7 @@ function meta:WantsToDM()
 				local self = self
 				self:ManageGhost(not self:IsGhost())
 
-				self.DMTimer = 10
+				self.DMTimer = 1
 
 				local timername = "SpecDM_Timer_" .. tostring(self:UniqueID())
 
@@ -181,12 +181,12 @@ hook.Add("TTTEndRound", "TTTEndRound_Ghost", function()
 end)
 
 net.Receive("SpecDM_SendLoadout", function(_, ply)
-	local primary = net.ReadString()
-	local secondary = net.ReadString()
+    local primary = net.ReadString()
+    local secondary = net.ReadString()
 
-	if not primary or not secondary then return end
+    if not primary or not secondary then return end
 
-	if primary == "random" or string.Left(primary, #"weapon_ghost") ~= "weapon_ghost" then
+    if primary == "random" or string.Left(primary, #"weapon_ghost") ~= "weapon_ghost" then
 		ply.ghost_primary = "random"
 	end
 

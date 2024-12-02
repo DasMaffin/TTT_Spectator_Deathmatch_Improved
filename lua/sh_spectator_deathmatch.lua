@@ -2,23 +2,28 @@ include("specdm_config.lua")
 include("specdm_von.lua")
 
 if SpecDM.AutoIncludeWeapons then
-	SpecDM.Ghost_weapons.primary = {}
-	SpecDM.Ghost_weapons.secondary = {}
-	SpecDM.Loadout_Icons = {}
-
+    SpecDM.Ghost_weapons.primary = {}
+    SpecDM.Ghost_weapons.secondary = {}
+    SpecDM.Loadout_Icons = {}
+    
 	hook.Add("Initialize", "SharedInitialize_Ghost", function()
 
 
 
 		-- CreateGhost variants of every primary/secondary non T/D weapon 
 		for _, weapon in ipairs(weapons.GetList()) do
-			if weapon.Kind and weapon.Base == "weapon_tttbase" and weapon.CanBuy == nil and (weapon.Kind == WEAPON_HEAVY or weapon.Kind == WEAPON_PISTOL) then
+			if weapon.Kind 
+			and weapon.Base == "weapon_tttbase" 
+			and weapon.CanBuy == nil 
+			and (weapon.Kind == WEAPON_HEAVY or weapon.Kind == WEAPON_PISTOL) 
+			and weapon.ClassName:match("^weapon_%w+_%w+$") then -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
 
 				-- Create a copy of the weapon
 				local ghostWeapon = table.Copy(weapon)
 				ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
-				ghostWeapon.ClassName = weapon.ClassName .. "_ghost" -- Ensure a unique class name
-		
+				ghostWeapon.ClassName = weapon.ClassName:gsub("^weapon_[^_]+_", "weapon_ghost_") -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
+				ghostWeapon.AutoSpawnable = false
+
 				-- Register the new weapon
 				weapons.Register(ghostWeapon, ghostWeapon.ClassName)
 			end
