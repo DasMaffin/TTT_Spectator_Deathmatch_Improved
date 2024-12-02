@@ -41,6 +41,24 @@ SpecDM.AutoIncludeWeapons = true
 
 -- When AutoIncludeWeapons is set to true the table will be emptied before adding all ghost weapons
 SpecDM.Ghost_weapons = {
+	secondary = {
+		"weapon_ghost_glock",
+		"weapon_ghost_pistol",
+		"weapon_ghost_revolver",
+		"weapon_ghost_magnum"
+	},
+	primary = {
+		"weapon_ghost_ak47",
+		"weapon_ghost_augbar",
+		"weapon_ghost_awp",
+		"weapon_ghost_galil",
+		"weapon_ghost_sledge",
+		"weapon_ghost_mac10",
+		"weapon_ghost_hl2smg",
+		"weapon_ghost_mp5",
+		"weapon_ghost_shotgun",
+		"weapon_ghost_rifle"
+	}
 }
 
 -- Enabled the loadout and allow players to select their favorite weapons?
@@ -54,6 +72,20 @@ SpecDM.DeadlyHitmarker = true
 
 -- Icons on the F1 loadout if the loadout is enabled
 SpecDM.Loadout_Icons = {
+	weapon_ghost_revolver = "vgui/ttt/icon_deagle",
+	weapon_ghost_glock = "vgui/ttt/icon_glock",
+	weapon_ghost_pistol = "vgui/ttt/icon_pistol",
+	weapon_ghost_magnum = "vgui/spec_dm/icon_sdm_revolver",
+	weapon_ghost_rifle = "vgui/ttt/icon_scout",
+	weapon_ghost_ak47 = "vgui/spec_dm/icon_sdm_ak47",
+	weapon_ghost_sledge = "vgui/ttt/icon_m249",
+	weapon_ghost_mac10 = "vgui/ttt/icon_mac",
+	weapon_ghost_augbar = "vgui/spec_dm/icon_sdm_aug",
+	weapon_ghost_hl2smg = "vgui/spec_dm/icon_sdm_smg",
+	weapon_ghost_shotgun = "vgui/ttt/icon_shotgun",
+	weapon_ghost_awp = "vgui/spec_dm/icon_sdm_awp",
+	weapon_ghost_galil = "vgui/spec_dm/icon_sdm_galil",
+	weapon_ghost_mp5 = "vgui/spec_dm/icon_sdm_mp5"
 }
 
 -- If you're using _Undefined's pointshop you can enable this to give ghosts points when they kill other ghosts
