@@ -20,6 +20,7 @@ if SpecDM.AutoIncludeWeapons then
 
 				-- Create a copy of the weapon
 				local ghostWeapon = table.Copy(weapon)
+				ghostWeapon.SoundLevel = 0
 				ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
 				ghostWeapon.ClassName = weapon.ClassName:gsub("^weapon_[^_]+_", "weapon_ghost_") -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
 				ghostWeapon.AutoSpawnable = false
