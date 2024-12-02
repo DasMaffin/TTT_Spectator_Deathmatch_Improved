@@ -393,13 +393,6 @@ end
 
 function SWEP:DrawWeaponSelection() end
 
-function SWEP:SecondaryAttack()
-   if self.NoSights or (not self.IronSightsPos) then return end
-
-   self:SetIronsights(not self:GetIronsights())
-   self:SetNextSecondaryFire(CurTime() + 0.3)
-end
-
 function SWEP:Deploy()
    self:SetIronsights(false)
 
@@ -409,9 +402,9 @@ end
 function SWEP:Reload()
 	if (self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount(self.Primary.Ammo) <= 0) then return end
 
-    self.Weapon:DefaultReload(self.ReloadAnim)
+      self.Weapon:DefaultReload(self.ReloadAnim)
 
-    self:SetIronsights(false)
+      self:SetIronsights(false)
 end
 
 function SWEP:OnRestore()
@@ -442,7 +435,7 @@ function SWEP:PreDrop()
       if ammo > 0 then
          self:GetOwner():RemoveAmmo(ammo, self.Primary.Ammo)
       end
-   end
+  end
 end
 
 function SWEP:DampenDrop()
