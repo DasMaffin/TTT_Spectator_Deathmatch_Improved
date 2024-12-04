@@ -402,9 +402,9 @@ end
 function SWEP:Reload()
 	if (self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount(self.Primary.Ammo) <= 0) then return end
 
-      self.Weapon:DefaultReload(self.ReloadAnim)
+   self.Weapon:DefaultReload(self.ReloadAnim)
 
-      self:SetIronsights(false)
+   self:SetIronsights(false)
 end
 
 function SWEP:OnRestore()

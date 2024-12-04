@@ -24,6 +24,7 @@ if SpecDM.AutoIncludeWeapons then
 				ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
 				ghostWeapon.ClassName = weapon.ClassName:gsub("^weapon_[^_]+_", "weapon_ghost_") -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
 				ghostWeapon.AutoSpawnable = false
+				ghostWeapon.Primary.DefaultClip = 500
 
 				-- Register the new weapon
 				weapons.Register(ghostWeapon, ghostWeapon.ClassName)
