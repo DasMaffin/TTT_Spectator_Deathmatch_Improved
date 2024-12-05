@@ -400,7 +400,6 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-   print("AAAAAAAAAAAAAAAAAAAA")
 	if (self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount(self.Primary.Ammo) <= 0) then return end
 
    self.Weapon:DefaultReload(self.ReloadAnim)
@@ -414,8 +413,8 @@ function SWEP:Reload()
        local totalAmmo = clip + spareAmmo
 
        -- Calculate how much ammo to add to reach 500
-       if totalAmmo < 500 then
-           local ammoToAdd = 500 - totalAmmo
+       if SERVER and totalAmmo < 90 then
+           local ammoToAdd = 90 - totalAmmo
            owner:GiveAmmo(ammoToAdd, self.Primary.Ammo, true)
        end
    end
