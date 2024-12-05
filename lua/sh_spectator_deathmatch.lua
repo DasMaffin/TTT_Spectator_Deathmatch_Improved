@@ -5,49 +5,64 @@ if SpecDM.AutoIncludeWeapons then
     SpecDM.Ghost_weapons.primary = {}
     SpecDM.Ghost_weapons.secondary = {}
     SpecDM.Loadout_Icons = {}
-    
-	hook.Add("Initialize", "SharedInitialize_Ghost", function()
 
+    -- Function to wrap methods and ensure base calls
+    local function wrapMethodWithBaseCall(weapon, methodName)
+        if weapon[methodName] then
+            local originalMethod = weapon[methodName]
 
+            -- Wrap the method
+            weapon[methodName] = function(self, ...)
+                originalMethod(self, ...)
+                -- Call the parent class method if it exists
+                if self.BaseClass and self.BaseClass[methodName] then
+                    return self.BaseClass[methodName](self, ...)
+                end
+            end
+        end
+    end
 
-		-- CreateGhost variants of every primary/secondary non T/D weapon 
-		for _, weapon in ipairs(weapons.GetList()) do
-			if weapon.Kind 
-			and weapon.Base == "weapon_tttbase" 
-			and weapon.CanBuy == nil 
-			and (weapon.Kind == WEAPON_HEAVY or weapon.Kind == WEAPON_PISTOL) 
-			and weapon.ClassName:match("^weapon_%w+_%w+$") then -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
+    hook.Add("Initialize", "SharedInitialize_Ghost", function()
+        -- Create ghost variants of every primary/secondary non T/D weapon
+        for _, weapon in ipairs(weapons.GetList()) do
+            if weapon.Kind 
+            and weapon.Base == "weapon_tttbase" 
+            and weapon.CanBuy == nil 
+            and (weapon.Kind == WEAPON_HEAVY or weapon.Kind == WEAPON_PISTOL) 
+            and weapon.ClassName:match("^weapon_%w+_%w+$") then -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
 
-				-- Create a copy of the weapon
-				local ghostWeapon = table.Copy(weapon)
-				ghostWeapon.SoundLevel = 0
-				ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
-				ghostWeapon.ClassName = weapon.ClassName:gsub("^weapon_[^_]+_", "weapon_ghost_") -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
-				ghostWeapon.AutoSpawnable = false
-				ghostWeapon.Primary.DefaultClip = 500
+                -- Create a copy of the weapon
+                local ghostWeapon = table.Copy(weapon)
+                ghostWeapon.SoundLevel = 0
+                ghostWeapon.Base = "weapon_ghost_base" -- Change the inheritance
+                ghostWeapon.ClassName = weapon.ClassName:gsub("^weapon_[^_]+_", "weapon_ghost_") -- THIS NAMING CONVENTION IS IMPORTANT! ANY OTHER WILL BREAK THE REST OF THE MOD MAKING GUNS NOT SPAWN
+                ghostWeapon.AutoSpawnable = false
+                ghostWeapon.Primary.DefaultClip = 500
 
-				-- Register the new weapon
-				weapons.Register(ghostWeapon, ghostWeapon.ClassName)
-			end
-		end
+                -- Wrap methods like Reload to ensure base methods are called
+                wrapMethodWithBaseCall(ghostWeapon, "Reload")
 
-		for _, w in ipairs(weapons.GetList()) do
-			if w.Kind and w.Base == "weapon_ghost_base" and (w.Kind == WEAPON_HEAVY or w.Kind == WEAPON_PISTOL) then
-				if w.Kind == WEAPON_HEAVY then
-					table.insert(SpecDM.Ghost_weapons.primary, w.ClassName)
-				else
-					table.insert(SpecDM.Ghost_weapons.secondary, w.ClassName)
-				end
+                -- Register the new weapon
+                weapons.Register(ghostWeapon, ghostWeapon.ClassName)
+            end
+        end
 
-				if w.Icon then
-					SpecDM.Loadout_Icons[w.ClassName] = w.Icon
-				end
-			end
-		end
+        for _, w in ipairs(weapons.GetList()) do
+            if w.Kind and w.Base == "weapon_ghost_base" and (w.Kind == WEAPON_HEAVY or w.Kind == WEAPON_PISTOL) then
+                if w.Kind == WEAPON_HEAVY then
+                    table.insert(SpecDM.Ghost_weapons.primary, w.ClassName)
+                else
+                    table.insert(SpecDM.Ghost_weapons.secondary, w.ClassName)
+                end
 
-
-	end)
+                if w.Icon then
+                    SpecDM.Loadout_Icons[w.ClassName] = w.Icon
+                end
+            end
+        end
+    end)
 end
+
 
 local meta = FindMetaTable("Player")
 
